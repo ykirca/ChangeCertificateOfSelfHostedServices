@@ -10,7 +10,7 @@ foreach ($server in $serverlist)
     #Copy certificates from local computer to remote servers
     $destRootCA ="C:\Users\administrator\Desktop\SSLCerts\RootCA.cer" #Root certificate's name on remote computer. Please change the path.
     $destPrivate ="C:\Users\administrator\Desktop\SSLCerts\PrivateCert.pfx" #PFX certificate's name on remote computer. Please change the path.
-    $localRootCA = 'C:\Scripts\1.cer' #Root certificate on local computer. This certificate will be copied from local computer to remote server. Please change the path.
+    $localRootCA = 'C:\Scripts\RootCA.cer' #Root certificate on local computer. This certificate will be copied from local computer to remote server. Please change the path.
     $localPrivate = 'C:\Scripts\PrivateCert.pfx' #PFX certificate on local computer. This certificate will be copied from local computer to remote server. Please change the path.
 
     Copy-Item -Path $localRootCA -Destination $destRootCA -ToSession $session
