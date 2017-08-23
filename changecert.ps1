@@ -37,18 +37,19 @@ foreach ($server in $serverlist)
 
      
         Write-Output "Adding new certificate..."
-        try{
-        Import-certificate -FilePath $destRootCA  -CertStoreLocation Cert:\LocalMachine\Root
-        $mypwd = ConvertTo-SecureString -String "changeit" -Force -AsPlainText #Change password ("changeit")
-        Import-PfxCertificate -FilePath $destPrivate cert:\localMachine\my -Password $mypwd 
+        try
+        {
+            Import-certificate -FilePath $destRootCA  -CertStoreLocation Cert:\LocalMachine\Root
+            $mypwd = ConvertTo-SecureString -String "changeit" -Force -AsPlainText #Change password ("changeit")
+            Import-PfxCertificate -FilePath $destPrivate cert:\localMachine\my -Password $mypwd 
 
-        $certSubject = "CN=*.testdomain.com"
-        $newcert = Get-ChildItem cert:\LocalMachine\MY | Where-Object {$_.subject -like "$certSubject*" -AND $_.Subject -notmatch "CN=$env:COMPUTERNAME"}
-        $newthumbprint = $newcert.Thumbprint.ToString()
-      
-        netsh http add sslcert ipport=0.0.0.0:443 certhash=$newthumbprint appid='{06aabebd-3a91-4b80-8a15-adfd3c8a0b14}' certstore=my
-        write-host $newthumbprint
-        Write-Output "Completed!"
+            $certSubject = "CN=*.testdomain.com"
+            $newcert = Get-ChildItem cert:\LocalMachine\MY | Where-Object {$_.subject -like "$certSubject*" -AND $_.Subject -notmatch "CN=$env:COMPUTERNAME"}
+            $newthumbprint = $newcert.Thumbprint.ToString()
+
+            netsh http add sslcert ipport=0.0.0.0:443 certhash=$newthumbprint appid='{06aabebd-3a91-4b80-8a15-adfd3c8a0b14}' certstore=my
+            write-host $newthumbprint
+            Write-Output "Completed!"
         }
         catch
         {
