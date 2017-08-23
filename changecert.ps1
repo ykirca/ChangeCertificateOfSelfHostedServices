@@ -28,14 +28,12 @@ foreach ($server in $serverlist)
             $removecert = Remove-Item -Path Cert:\localmachine\my\$oldthumbprint -DeleteKey
             Write-Output $removecert
             netsh http delete sslcert ipport=0.0.0.0:443
-
         }
         catch
         {
             Write-Output "An error occurred while removing old certificate!"
         }
-
-     
+  
         Write-Output "Adding new certificate..."
         try
         {
@@ -56,5 +54,4 @@ foreach ($server in $serverlist)
             Write-Output "An error occurred while adding new certificate!"
         }
     }
-
 }
